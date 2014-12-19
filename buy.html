@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>Books Store</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/Book.js"></script>
+    <script type="text/javascript" src="js/books.js"></script>
+    <style type="text/css">
+    body {
+        background-color: #dddddd;
+    }
+    header {
+        padding-bottom: 0px;
+    }
+    
+    </style>
+</head>
+
+<body>
+
+    <div class="container col-lg-12 col-md-12">
+        <header class="navbar-header col-lg-12 col-md-12 row" style="margin-bottom: 20px;">
+            <a class="navbar-brand" href="#">
+                <img src="./images/default-logo.png" alt="Home">
+            </a>
+
+            <div class="col-lg-6" id="search-area">
+                <h2>Steal Book from here </h2>
+            </div>
+            <!-- /.col-lg-6 -->
+
+
+        </header>
+
+
+
+
+
+        <div class="col-lg-12 col-md-12">
+            <h3 id="title"></h3>
+            <div class="col-lg-3 col-md-3">
+                <img src="" id="img" class="span12 thumbnail" width="80%">
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <h3>Buy Now</h3>
+                <p>Price : <b>$</b><b id='price'></b>
+                </p>
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="name" class="ad-on">Name</label>
+                        <input type="text" class="form-control" id="name" >
+                    </div>
+                    <div class="form-group">
+                        <label for="credit" class="ad-on">CreditCard Number:</label>
+                        <input type="text" class="form-control"  name="credit" id="credit">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" id="submit" style="margin-top:10px;">
+                             Submit </button>
+                    </div>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    $('#submit').on('click', function(e){
+        if($("#credit").val().length > 14){
+            alert("Thank you ");
+            document.location = "index.html";
+        }else{
+            alert("complete required info");
+        }
+        
+    })
+    
+    </script>
+
+</body>
+
+</html>

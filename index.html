@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <title>Books Store</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/Book.js"></script>
+    <script type="text/javascript" src="js/buyInfo.js"></script>
+    <script type="text/javascript" src="js/books.js"></script>
+    
+    <style type="text/css">
+    body {
+        background-color: #dddddd;
+    }
+    header {
+        padding-bottom: 0px;
+    }
+    hr.redLine {
+        border: #000 1px dotted;
+        border-style: none none dotted;
+    }
+    #search-area {
+        margin-top: 20px;
+    }
+    .img-div {
+        height: 200px;
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="container col-lg-12 col-md-12">
+        <header class="navbar-header col-lg-12 col-md-12 row" style="margin-bottom: 20px;">
+            <a class="navbar-brand" href="#">
+                <img src="./images/default-logo.png" alt="Home">
+            </a>
+            <button class="btn btn-danger pull-right" id="inventory"><span class="glyphicon glyphicon-tasks"></span> Inventory</button>
+
+            <div class="col-lg-6" id="search-area">
+
+                <div class="navbr-header">
+                    <label>Search For:</label>
+                    <ul class="nav nav-pills" id="search-categories">
+
+                        <li class="nav active"><a href="#" value="intitle">Title</a>
+                        </li>
+                        <li class="nav"><a href="#" value="subject">Subject</a>
+                        </li>
+                        <li class="nav"><a href="#" value='inauthor'>Author</a>
+                        </li>
+                    </ul>
+                    <hr class="redLine">
+                </div>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" list="books" id="search" value="Python">
+                    <datalist id="books">
+
+                    </datalist>
+                    <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="submit" autofocus><span class="glyphicon glyphicon-search" style="padding:3px 0px;"></span>
+                    </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+            <!-- /.col-lg-6 -->
+
+
+        </header>
+
+
+
+
+
+        <div class="col-lg-12 col-md-12">
+
+            <ul id="booklist" class="list-unstyled">
+
+            </ul>
+
+        </div>
+
+    </div>
+    <script type="text/javascript" src="js/myScript.js"></script>
+    <script type="text/javascript">
+    search();
+    </script>
+
+</body>
+
+</html>

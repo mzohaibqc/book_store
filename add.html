@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <title>Books Store</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/Book.js"></script>
+    <script type="text/javascript" src="js/buyInfo.js"></script>
+    <script type="text/javascript" src="js/books.js"></script>
+    <style type="text/css">
+    body {
+        background-color: #dddddd;
+    }
+    header {
+        padding-bottom: 0px;
+    }
+    
+    </style>
+</head>
+
+<body>
+
+    <div class="container col-lg-12 col-md-12">
+        <header class="navbar-header col-lg-12 col-md-12 row" style="margin-bottom: 20px;">
+            <a class="navbar-brand" href="#">
+                <img src="./images/default-logo.png" alt="Home">
+            </a>
+
+            <div class="col-lg-6" id="search-area">
+                <h2>Steal Book from here </h2>
+            </div>
+            <!-- /.col-lg-6 -->
+
+
+        </header>
+
+
+
+
+
+        <div class="col-lg-12 col-md-12">
+            <h3 id="title"></h3>
+            <div class="col-lg-3 col-md-3">
+                <img src="" id="img" class="span12 thumbnail" width="80%">
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <h3>Buy Now</h3>
+                <p>Price : <b>$</b><b id='price'></b>
+                </p>
+                <div class="input-group">
+                    <div class="form-group">
+                        <label for="amount" class="ad-on">Amount</label>
+                        <input type="number" class="form-control" min="1" id="amount" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="totlaprice" class="ad-on">Total :</label>
+                        <input type="text" class="form-control" id="totlaprice" name="totlaprice" readonly="true">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" style="margin-top:10px;" id="add">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</button>
+                        <button class="btn btn-danger" style="margin-top:10px;" id="buy">
+                            <span class="glyphicon glyphicon-ok"></span> Buy Selected</button>
+                    </div>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+    var buyInfo;
+    var id = localStorage.getItem('id');
+    var book = JSON.parse(localStorage.getItem(id));
+    console.log(book)
+    $('#title').html(book.title);
+    $('#img').attr('src', book.thumbnail)
+    $('#price').html(book.price);
+    $("#totlaprice").val('$' + $('#amount').val() * book.price);
+    $("#amount").on('change', function(e) {
+        if ($(this).val() < 1) {
+            $(this).val(1);
+        }
+        $("#totlaprice").val('$' + ($(this).val() * book.price));
+    });
+
+    $("#add").on('click', function() {
+        if (localStorage.getItem('buyinfo') === null) {
+            buyInfo = new buyInfo();
+            localStorage.setItem('buyinfo', JSON.stringify(buyInfo))
+        } else {
+            buyInfo = JSON.parse(localStorage.getItem('buyinfo'));
+            if (buyInfo.books.indexOf(id) > -1) {
+                alert('alredy in cart');
+            } else {
+                buyInfo.books.push(id);
+                localStorage.setItem('buyinfo', JSON.stringify(buyInfo));
+                console.log(localStorage.getItem('buyinfo'));
+                alert("This book is added to your cart")
+            }
+        }
+    })
+
+    $("#buy").on('click', function() {
+        if (localStorage.getItem('buyinfo') === null) {
+            alert('No book added');
+        } else {
+            buyInfo = JSON.parse(localStorage.getItem('buyinfo'));
+            if (buyInfo.books.length == 0) {
+                alert('No book added');
+            } else {
+                document.location = "buy.html";
+            }
+        }
+    })
+</script>
+
+</body>
+
+</html>
