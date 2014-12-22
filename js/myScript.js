@@ -86,6 +86,7 @@ function buy(e){
                           new Book(
                             data.items[i].id ,
                             info.title, 
+                            info.subtitle,
                             info.authors, 
                             info.description,
                             info.imageLinks.thumbnail, 
@@ -139,7 +140,7 @@ function buy(e){
                   }
                   if(cat == 'subject'){
                     var options = {
-                      keys: ['subject']
+                      keys: ['subtitle']
                     }
                     f = new Fuse(fuzzySearch, options);
                   } 

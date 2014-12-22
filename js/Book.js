@@ -1,6 +1,7 @@
-var Book = function(id, title, authors, desc, thumbnail, link,pageCount, rating ,publishedDate, publisher , price){
+var Book = function(id, title, subtitle, authors, desc, thumbnail, link,pageCount, rating ,publishedDate, publisher , price){
 	this.id = id;
 	this.title = title;
+	this.subtitle = subtitle;
 	this.authors = authors;
 	this.description = desc;
 	this.thumbnail = thumbnail;
