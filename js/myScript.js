@@ -2,6 +2,7 @@ var list = [];
 if(localStorage.getItem('list') === null){
   localStorage.setItem('list', JSON.stringify(list));
 }
+console.log("test")
 function buy(e){
         console.log("catch it")
         console.log($(e).closest('li.img-item').attr('id'))
