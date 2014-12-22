@@ -1,6 +1,6 @@
 var list = [];
 if(localStorage.getItem('list') === null){
-  localStorage.setItem('list', list);
+  localStorage.setItem('list', JSON.stringify(list));
 }
 function buy(e){
         console.log("catch it")
@@ -39,9 +39,9 @@ function buy(e){
 
       function search(){
         if($('#search').val().length > 0){
-            var query = $('#search').val();
+            var query = $('#search').val().toLowerCase();
             var cat = $("#search-categories li.active").find('a').attr('value');//html().toLowerCase();
-            $.get("https://www.googleapis.com/books/v1/volumes?q="+ query + "+"+ cat ,//+"&key=AIzaSyC61tbyDSLm7YeETK8HoQNXRsLg4CNlrpo",
+            $.get("https://www.googleapis.com/books/v1/volumes?q="+ query + "+"+ cat+"&maxResults=40" ,//+"&key=AIzaSyC61tbyDSLm7YeETK8HoQNXRsLg4CNlrpo",
             function(data){
                   $('#booklist').empty();
                   //$('#books').empty();
@@ -56,7 +56,25 @@ function buy(e){
                           if(list.indexOf(book.id) < 0){
                             list.push(book.id);
                           }
-                          addBookToList(book);
+                          //addBookToList(book);
+                          if(cat=='intitle'){
+                               console.log(typeof(book.title) !='undefined' && book.authors.join(',').toLowerCase())
+                              if(book.title.toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }
+                            if(cat == 'inauthor'){
+                              console.log(book.authors.join(','))
+                              if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }
+                            if(cat == 'subject'){
+                              if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }
+
                       }
                       else{
                         try{
@@ -78,7 +96,26 @@ function buy(e){
                             list.push(book.id);
                           }
                           
-                          addBookToList(book);
+
+                          //addBookToList(book);
+                            if(cat=='intitle'){
+                               console.log(typeof(book.title) !='undefined' && book.authors.join(','))
+                              if(book.title.toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }
+                            if(cat == 'inauthor'){
+                              console.log(book.authors.join(','))
+                              if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }
+                            if(cat == 'subject'){
+                              if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
+                                addBookToList(book);
+                              }
+                            }    
+                          
                         }
                         catch(e){
                             console.log(e);
