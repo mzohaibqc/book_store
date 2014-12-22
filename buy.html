@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         <label for="credit" class="ad-on">CreditCard Number:</label>
-                        <input type="text" class="form-control"  name="credit" id="credit">
+                        <input type="text" class="form-control" maxlength="14"  name="credit" id="credit">
                     </div>
 
                     <div class="form-group">
@@ -68,9 +68,19 @@
 
     </div>
     <script type="text/javascript">
+    var buyInfo = JSON.parse(localStorage.getItem('buyinfo'));
+    var total = 0 ;
+        for(var item in buyInfo){
+            console.log(buyInfo[item].total.substring(1))
+            total+= Number(buyInfo[item].total.substring(1));
+        }
+        console.log(total)
+    $('#price').html(total);    
     $('#submit').on('click', function(e){
-        if($("#credit").val().length > 14){
+        if($("#credit").val().length == 14){
             alert("Thank you ");
+            buyInfo = {};
+            localStorage.setItem('buyinfo', JSON.stringify(buyInfo));
             document.location = "index.html";
         }else{
             alert("complete required info");

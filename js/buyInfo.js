@@ -1,8 +1,8 @@
 var BuyInfo = function(){
 	
 	this.books=[];
-	this.addBook = function(id){
-		this.books.push(id);
+	this.addBook = function(id,count){
+		this.books.push(new BookIDCount(id,count));
 	}
 }
 

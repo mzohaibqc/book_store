@@ -13,10 +13,10 @@ function buy(e){
 
       function addBookToList(book){
         var authors ="";
-        if(book.authors.length > 1){
+        if(typeof(book.authors) != "undefined" && book.authors.length > 1){
           authors = book.authors.join(' , ');
         }else{
-          authors = book.authors[0];
+          authors = typeof(book.authors) != "undefined" ? book.authors[0] : "Anonymous";
         }
           $('#booklist').append(
             "<li id='"+book.id+"' class='img-item'>"+
@@ -47,35 +47,37 @@ function buy(e){
             function(data){
                   $('#booklist').empty();
                   //$('#books').empty();
+                  list = JSON.parse(localStorage.getItem('list')) || [];
+                  var fuzzySearch = [];
                   for(var i=0; i< data.items.length; i++){
                       console.log(data.items[i])
                       var info = data.items[i].volumeInfo;
                       $('#books').append("<option value='"+info.title+"'></option>");
                       var book;
-                      list = JSON.parse(localStorage.getItem('list'));
+                      
                       if((book = localStorage.getItem(data.items[i].id)) !== null){
                           book = JSON.parse(book);
                           if(list.indexOf(book.id) < 0){
                             list.push(book.id);
                           }
+                          fuzzySearch.push(book)
                           //addBookToList(book);
-                          if(cat=='intitle'){
-                               console.log(typeof(book.title) !='undefined' && book.authors.join(',').toLowerCase())
-                              if(book.title.toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }
-                            if(cat == 'inauthor'){
-                              console.log(book.authors.join(','))
-                              if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }
-                            if(cat == 'subject'){
-                              if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }
+                          // if(cat=='intitle'){
+
+                          //     if(book.title.toLowerCase().search(query)!=-1){
+                          //       addBookToList(book);
+                          //     }
+                          //   }
+                          //   if(cat == 'inauthor'){
+                          //     if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
+                          //       addBookToList(book);
+                          //     }
+                          //   }
+                          //   if(cat == 'subject'){
+                          //     if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
+                          //       addBookToList(book);
+                          //     }
+                          //   }
 
                       }
                       else{
@@ -98,25 +100,23 @@ function buy(e){
                             list.push(book.id);
                           }
                           
-
+                          fuzzySearch.push(book);
                           //addBookToList(book);
-                            if(cat=='intitle'){
-                               console.log(typeof(book.title) !='undefined' && book.authors.join(','))
-                              if(book.title.toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }
-                            if(cat == 'inauthor'){
-                              console.log(book.authors.join(','))
-                              if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }
-                            if(cat == 'subject'){
-                              if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
-                                addBookToList(book);
-                              }
-                            }    
+                            // if(cat=='intitle'){
+                            //   if(book.title.toLowerCase().search(query)!=-1){
+                            //     addBookToList(book);
+                            //   }
+                            // }
+                            // if(cat == 'inauthor'){
+                            //   if(typeof(book.authors) !='undefined' && book.authors.join(',').toLowerCase().search(query)!=-1){
+                            //     addBookToList(book);
+                            //   }
+                            // }
+                            // if(cat == 'subject'){
+                            //   if(typeof(book.subject) !='undefined' && book.subject.toLowerCase().search(query)!=-1){
+                            //     addBookToList(book);
+                            //   }
+                            // }    
                           
                         }
                         catch(e){
@@ -124,7 +124,35 @@ function buy(e){
                         }
                       }
                   }
+                  var f =[];
+                  if(cat=='intitle'){
+                    var options = {
+                      keys: ['title']
+                    }
+                    f = new Fuse(fuzzySearch, options);
+                  }
+                  if(cat == 'inauthor'){
+                    var options = {
+                      keys: ['authors']
+                    }
+                    f = new Fuse(fuzzySearch, options);
+                  }
+                  if(cat == 'subject'){
+                    var options = {
+                      keys: ['subject']
+                    }
+                    f = new Fuse(fuzzySearch, options);
+                  } 
+                  
+                  console.log(f.search(query))
+                  f.search(query).forEach(function(d,i){
+                    console.log('fuzzy',d)
+                      addBookToList(d);
+                  })
                   localStorage.setItem('list', JSON.stringify(list));
+                  if($('#booklist li').length == 0){
+                      $("#booklist").append("<h4>Sorry, No item found</h4>")
+                  }
             });
             
         }
@@ -143,7 +171,7 @@ $("#inventory").on('click', function(){
   $("#booklist").empty();
   list = JSON.parse(localStorage.getItem('list'));
   list.forEach(function(d, i){
-    console.log("Inventory")
+    console.log(d)
       var b = JSON.parse(localStorage.getItem(d));
       if(b !== null){
         addBookToList(b);
