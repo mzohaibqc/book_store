@@ -70,16 +70,20 @@
 
     </div>
     <script type="text/javascript">
+    // retrieve buyer cart info
     var buyInfo = JSON.parse(localStorage.getItem('buyinfo'));
-    var total = 0 ;
+    var total = 0 ;  // contains total books price which are in cart
+
+        // show list of book in the Cart
         for(var item in buyInfo){
             var book = JSON.parse(localStorage.getItem(item));
             $('#booksImages').append("<li class='thumbnail'><img src='"+book.thumbnail+"img-responsive' ></li>")
-            console.log(buyInfo[item].total.substring(1))
             total+= Number(buyInfo[item].total.substring(1));
         }
-        console.log(total)
-    $('#price').html(total);    
+     // show total price    
+    $('#price').html(total); 
+
+    // check for credit card number and then show buying status and move to home page   
     $('#submit').on('click', function(e){
         if($("#credit").val().length == 14){
             alert("Thank you ");

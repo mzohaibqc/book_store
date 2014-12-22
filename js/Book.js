@@ -1,4 +1,7 @@
+
 var Book = function(id, title, subtitle, authors, desc, thumbnail, link,pageCount, rating ,publishedDate, publisher , price){
+	// this is a Book class 
+	// it stores all required information about book
 	this.id = id;
 	this.title = title;
 	this.subtitle = subtitle;
@@ -13,3 +16,4 @@ var Book = function(id, title, subtitle, authors, desc, thumbnail, link,pageCoun
 	this.price = price;
 
 }
+
