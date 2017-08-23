@@ -7,3 +7,7 @@ It allows user to buy a book or more.
 
 I have used all required things e.g. Methods, Classes , Objects, Event binding 
 and AJax request to search books data from Google Book API V1.
+
+Here is sample output
+
+![Sample](/images/sample.png?raw=true "Sample")
